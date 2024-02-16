@@ -1,13 +1,12 @@
 pub mod simple_api {
     use std::collections::HashMap;
-    use std::fs;
     use std::net::TcpStream;
     use std::io::prelude::*;
     use std::sync::Arc;
     use std::sync::Mutex;
 
     use crate::musicianservice::Musician;
-    use crate::objectservice::Painter;
+    use crate::painterservice::Painter;
 
     pub struct Router{
         routes: HashMap<String, (&'static str, fn() -> String)>
@@ -48,8 +47,10 @@ pub mod simple_api {
             let request_str = String::from_utf8_lossy(&buffer).to_string();
             let parts: Vec<&str> = request_str.split_whitespace().collect();
             let ( method, path) = if parts.len() > 1 { (parts[0], parts[1]) } else { ("GET", "/") };
-
-            println!("{}", request_str);
+            
+            #[cfg(debug_assertions)]{
+                println!("{}", request_str);
+            }
 
             let response = Request {
                 buffer,

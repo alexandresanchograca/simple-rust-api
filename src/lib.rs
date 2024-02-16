@@ -1,5 +1,5 @@
 pub mod simpleapi;
-mod objectservice;
+mod painterservice;
 mod musicianservice;
 
 use std::sync::mpsc;
